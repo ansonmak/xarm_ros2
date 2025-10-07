@@ -18,6 +18,7 @@
     create_attach_link:=true
     ros2_control_params:=''
     load_gazebo_plugin:=false 
+    add_gemini2:=false
     add_realsense_d435i:=false
     add_d435i_links:=true
     use_gazebo_camera:=false
@@ -211,6 +212,12 @@
       </xacro:unless>
     </xacro:unless>
 
+    <xacro:if value="${add_gemini2}">
+      <!-- (xarm) Load Gemini2 Camera URDF -->
+      <xacro:include filename="$(find xarm_description)/urdf/camera/gemini2_with_mount.urdf.xacro" />
+      <xacro:gemini2_with_mount prefix="${prefix}" />
+    </xacro:if>
+
     <xacro:if value="${add_realsense_d435i}">
       <!-- (xarm) Load RealSense D435i URDF -->
       <xacro:include filename="$(find xarm_description)/urdf/camera/realsense_d435i.urdf.xacro" />
@@ -220,7 +227,9 @@
         <xacro:realsense_gazebo prefix="${prefix}" />
       </xacro:if>
     </xacro:if>
-    <xacro:unless value="${add_realsense_d435i}">
+
+    <!-- add link eef if no camera -->
+    <xacro:unless value="${add_realsense_d435i or add_gemini2}">
       <link name="${prefix}link_eef"/>
     </xacro:unless>
     <joint name="${prefix}joint_eef" type="fixed">

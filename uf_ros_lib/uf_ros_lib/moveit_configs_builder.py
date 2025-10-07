@@ -256,6 +256,7 @@ class MoveItConfigsBuilder(ParameterBuilder):
         add_gripper = get_param_str('add_gripper', False)
         add_vacuum_gripper = get_param_str('add_vacuum_gripper', False)
         add_bio_gripper = get_param_str('add_bio_gripper', False)
+        add_gemini2 = get_param_str('add_gemini2', False)
         add_realsense_d435i = get_param_str('add_realsense_d435i', False)
         add_d435i_links = get_param_str('add_d435i_links', True)
         use_gazebo_camera = get_param_str('use_gazebo_camera', False)
@@ -303,6 +304,7 @@ class MoveItConfigsBuilder(ParameterBuilder):
             'add_gripper': add_gripper,
             'add_vacuum_gripper': add_vacuum_gripper,
             'add_bio_gripper': add_bio_gripper,
+            'add_gemini2': add_gemini2,
             'add_realsense_d435i': add_realsense_d435i,
             'add_d435i_links': add_d435i_links,
             'use_gazebo_camera': use_gazebo_camera,
@@ -902,6 +904,7 @@ class DualMoveItConfigsBuilder(ParameterBuilder):
         add_bio_gripper = get_param_str('add_bio_gripper', False)
         add_bio_gripper_1 = get_param_str('add_bio_gripper_1', add_bio_gripper)
         add_bio_gripper_2 = get_param_str('add_bio_gripper_2', add_bio_gripper)
+        add_gemini2 = get_param_str('add_gemini2', False)
         add_realsense_d435i = get_param_str('add_realsense_d435i', False)
         add_realsense_d435i_1 = get_param_str('add_realsense_d435i_1', add_realsense_d435i)
         add_realsense_d435i_2 = get_param_str('add_realsense_d435i_2', add_realsense_d435i)

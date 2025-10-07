@@ -36,6 +36,7 @@ def launch_setup(context, *args, **kwargs):
     ros2_control_plugin = LaunchConfiguration('ros2_control_plugin', default='uf_robot_hardware/UFRobotSystemHardware')
     xacro_file = LaunchConfiguration('xacro_file', default=PathJoinSubstitution([FindPackageShare('xarm_description'), 'urdf', 'xarm_device.urdf.xacro']))
 
+    add_gemini2 = LaunchConfiguration('add_gemini2', default=False)
     add_realsense_d435i = LaunchConfiguration('add_realsense_d435i', default=False)
     add_d435i_links = LaunchConfiguration('add_d435i_links', default=True)
     model1300 = LaunchConfiguration('model1300', default=False)
@@ -101,6 +102,7 @@ def launch_setup(context, *args, **kwargs):
                 add_gripper=add_gripper,
                 add_vacuum_gripper=add_vacuum_gripper,
                 add_bio_gripper=add_bio_gripper,
+                add_gemini2=add_gemini2,
                 add_realsense_d435i=add_realsense_d435i,
                 add_d435i_links=add_d435i_links,
                 add_other_geometry=add_other_geometry,

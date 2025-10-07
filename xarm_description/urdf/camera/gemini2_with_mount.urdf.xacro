@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- <robot xmlns:xacro="http://ros.org/wiki/xacro" name="gemini2_with_mount"> -->
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="gemini2_with_mount">
+  <xacro:macro name="gemini2_with_mount" params="prefix:=''">
+
+    <xacro:property name="M_PI" value="3.1415926535897931" />
+
+    <xacro:include filename="$(find xarm_description)/urdf/camera/gemini2.urdf.xacro"/>
+    <xacro:gemini2 />
+    
+    <link name="${prefix}link_eef">
+      <visual>
+        <geometry>
+          <mesh
+            filename="package://xarm_description/meshes/camera/gemini2/gemini2_tool_mount.STL" />
+        </geometry>
+        <material name="">
+          <color rgba="0.8 0.8 0.8 1"/>
+        </material>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+      </visual>
+      <collision>
+        <geometry>
+          <mesh
+            filename="package://xarm_description/meshes/camera/gemini2/gemini2_tool_mount.STL" />
+        </geometry>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+      </collision>
+    </link>
+
+    <joint name="${prefix}camera_link_joint" type="fixed">
+      <parent link="${prefix}link_eef" />
+      <child link="${prefix}camera_link" />
+      <origin xyz="0.085 0 0.071" rpy="${M_PI} ${-M_PI/2} 0" />
+    </joint>
+
+  </xacro:macro>
+
+  <!-- For debug and visualization -->
+  <!-- <xacro:gemini2_with_mount /> -->
+
+</robot>
