@@ -36,6 +36,8 @@ void XArmPlanner::init(const std::string& group_name)
     std::copy(move_group_->getJointModelGroupNames().begin(), move_group_->getJointModelGroupNames().end(), std::ostream_iterator<std::string>(std::cout, ", "));
     move_group_->setMaxVelocityScalingFactor(max_velocity_scaling_factor);
     move_group_->setMaxAccelerationScalingFactor(max_acceleration_scaling_factor);
+    std::shared_ptr<robot_trajectory::RobotTrajectory> rt_;
+    rt_ = std::make_shared<robot_trajectory::RobotTrajectory>(move_group_->getRobotModel(), move_group_->getName());
 }
 
 bool XArmPlanner::planJointTarget(const std::vector<double>& joint_target)
@@ -84,6 +86,42 @@ bool XArmPlanner::planCartesianPath(const std::vector<geometry_msgs::msg::Pose>&
         RCLCPP_ERROR(node_->get_logger(), "planCartesianPath: plan failed, fraction=%lf", fraction);
         return false;
     }
+
+    //TODO: move_group_->getCurrentState() still cannot get current state sometimes, need fixing in the future for adjusting speed
+    // --- Time parameterization step ---
+
+    // auto current_state = move_group_->getCurrentState();
+    // rclcpp::Rate rate(100); // 100 Hz
+    // int attempts = 0;
+
+    // while (!current_state && attempts < 50) { // wait up to 0.5s
+    //     RCLCPP_INFO(node_->get_logger(), "Waiting for current robot state...");
+    //     rclcpp::sleep_for(std::chrono::milliseconds(10));
+    //     current_state = move_group_->getCurrentState();
+    //     attempts++;
+    // }
+
+
+    // if (!current_state) {
+    //     RCLCPP_ERROR(node_->get_logger(), "Failed to get current robot state after waiting!");
+    //     return false;
+    // }
+    // rt_->setRobotTrajectoryMsg(*current_state, trajectory_);
+
+    
+
+    // trajectory_processing::IterativeParabolicTimeParameterization iptp;
+    // bool success = iptp.computeTimeStamps(
+    //     *rt_,
+    //     max_velocity_scaling_factor,
+    //     max_acceleration_scaling_factor);
+
+    // if (!success) {
+    //     RCLCPP_WARN(node_->get_logger(), "Time parameterization for Cartesian path failed, using raw trajectory");
+    // }
+
+    // rt_->getRobotTrajectoryMsg(trajectory_);
+
     is_trajectory_ = true;
     // https://github.com/ros-planning/moveit2/commit/8bfe782d6254997d185644fa3eb358d2b79d69b2
     // (struct Plan) trajectory_ => trajectory

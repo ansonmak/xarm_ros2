@@ -13,6 +13,7 @@
 #include <xarm_msgs/srv/plan_joint.hpp>
 #include <xarm_msgs/srv/plan_exec.hpp>
 #include <xarm_msgs/srv/plan_single_straight.hpp>
+#include <xarm_msgs/srv/plan_waypoints.hpp>
 
 #define BIND_CLS_CB(func) std::bind(func, this, std::placeholders::_1, std::placeholders::_2)
 
@@ -26,6 +27,7 @@ private:
     bool do_pose_plan(const std::shared_ptr<xarm_msgs::srv::PlanPose::Request> req, std::shared_ptr<xarm_msgs::srv::PlanPose::Response> res);
     bool do_joint_plan(const std::shared_ptr<xarm_msgs::srv::PlanJoint::Request> req, std::shared_ptr<xarm_msgs::srv::PlanJoint::Response> res);
     bool do_single_cartesian_plan(const std::shared_ptr<xarm_msgs::srv::PlanSingleStraight::Request> req, std::shared_ptr<xarm_msgs::srv::PlanSingleStraight::Response> res);
+    bool do_waypoints_plan(const std::shared_ptr<xarm_msgs::srv::PlanWaypoints::Request> req, std::shared_ptr<xarm_msgs::srv::PlanWaypoints::Response> res);
     bool exec_plan_cb(const std::shared_ptr<xarm_msgs::srv::PlanExec::Request> req, std::shared_ptr<xarm_msgs::srv::PlanExec::Response> res);
     
 private:
@@ -38,6 +40,7 @@ private:
     rclcpp::Service<xarm_msgs::srv::PlanPose>::SharedPtr pose_plan_server_;
     rclcpp::Service<xarm_msgs::srv::PlanJoint>::SharedPtr joint_plan_server_;
     rclcpp::Service<xarm_msgs::srv::PlanSingleStraight>::SharedPtr single_straight_plan_server_;
+    rclcpp::Service<xarm_msgs::srv::PlanWaypoints>::SharedPtr waypoints_plan_server_;
 };
 
 XArmPlannerRunner::XArmPlannerRunner(rclcpp::Node::SharedPtr& node)
@@ -64,6 +67,7 @@ XArmPlannerRunner::XArmPlannerRunner(rclcpp::Node::SharedPtr& node)
     pose_plan_server_ = node_->create_service<xarm_msgs::srv::PlanPose>("xarm_pose_plan", BIND_CLS_CB(&XArmPlannerRunner::do_pose_plan));
     joint_plan_server_ = node_->create_service<xarm_msgs::srv::PlanJoint>("xarm_joint_plan", BIND_CLS_CB(&XArmPlannerRunner::do_joint_plan));
     single_straight_plan_server_ = node_->create_service<xarm_msgs::srv::PlanSingleStraight>("xarm_straight_plan", BIND_CLS_CB(&XArmPlannerRunner::do_single_cartesian_plan));
+    waypoints_plan_server_ = node_->create_service<xarm_msgs::srv::PlanWaypoints>("xarm_waypoints_plan", BIND_CLS_CB(&XArmPlannerRunner::do_waypoints_plan));
 }
 
 bool XArmPlannerRunner::do_pose_plan(const std::shared_ptr<xarm_msgs::srv::PlanPose::Request> req, std::shared_ptr<xarm_msgs::srv::PlanPose::Response> res)
@@ -84,6 +88,14 @@ bool XArmPlannerRunner::do_single_cartesian_plan(const std::shared_ptr<xarm_msgs
 {
     std::vector<geometry_msgs::msg::Pose> waypoints;
     waypoints.push_back(req->target);
+    bool success = xarm_planner_->planCartesianPath(waypoints);
+    res->success = success;
+    return success;
+}
+
+bool XArmPlannerRunner::do_waypoints_plan(const std::shared_ptr<xarm_msgs::srv::PlanWaypoints::Request> req, std::shared_ptr<xarm_msgs::srv::PlanWaypoints::Response> res)
+{
+    std::vector<geometry_msgs::msg::Pose> waypoints = req->targets;
     bool success = xarm_planner_->planCartesianPath(waypoints);
     res->success = success;
     return success;

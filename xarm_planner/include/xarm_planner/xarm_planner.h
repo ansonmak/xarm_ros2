@@ -13,6 +13,8 @@
 
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
+#include <moveit/robot_trajectory/robot_trajectory.h>
+#include <moveit/trajectory_processing/iterative_time_parameterization.h>
 
 #include <moveit_msgs/msg/display_robot_state.hpp>
 #include <moveit_msgs/msg/display_trajectory.hpp>
@@ -45,6 +47,7 @@ namespace xarm_planner
 
         rclcpp::Node::SharedPtr node_;
         std::shared_ptr<moveit::planning_interface::MoveGroupInterface> move_group_;
+        std::shared_ptr<robot_trajectory::RobotTrajectory> rt_;
         moveit::planning_interface::MoveGroupInterface::Plan xarm_plan_;
         moveit_msgs::msg::RobotTrajectory trajectory_;
         bool is_trajectory_;
