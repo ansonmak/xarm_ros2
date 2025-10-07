@@ -12,7 +12,7 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    dof = LaunchConfiguration('dof')
+    dof = LaunchConfiguration('dof', default=6)
     robot_type = LaunchConfiguration('robot_type', default='xarm')
 
     xarm_planner_node_test = Node(
