@@ -6,10 +6,57 @@
     <xacro:unless value="${attach_to == ''}">
       <joint name="${prefix}gripper_fix" type="fixed">
         <parent link="${attach_to}"/>
-        <child link="${prefix}xarm_gripper_base_link"/>
+        <child link="${prefix}ft_sensor_link"/>
         <origin xyz="${attach_xyz}" rpy="${attach_rpy}"/>
       </joint>
     </xacro:unless>
+
+  <!-- Modification to add Force-torque sensor model -->
+    <xacro:arg name="add_realsense_d435i" default="false"/>
+    <xacro:arg name="add_gemini2" default="false"/>
+    <xacro:property name="cam_plate_thickness" value="0.00305"/> 
+    <xacro:property name="ft_length" value="0.0585"/> 
+    <xacro:property name="ft_radius" value="${0.075/2.0}"/>
+    <!-- If using camera, add camera mount plate offset -->
+    <xacro:if value="${add_realsense_d435i or add_gemini2}">
+      <xacro:property name="ft_origin_z" value="${ft_length/2.0 + cam_plate_thickness}"/> 
+    </xacro:if>
+    <!-- If not using camera, no camera mount plate offset -->
+    <xacro:unless value="${add_realsense_d435i or add_gemini2}">
+      <xacro:property name="ft_origin_z" value="${ft_length/2.0}"/> 
+    </xacro:unless>
+
+    <link name="${prefix}ft_sensor_link">
+      <visual>
+        <origin xyz="0 0 ${ft_origin_z}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${ft_radius}" length="${ft_length}"/>
+        </geometry>
+        <material name="Grey">
+          <color rgba="0.5 0.5 0.5 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${ft_origin_z}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${ft_radius}" length="${ft_length}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 ${ft_origin_z}" rpy="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia
+          ixx="1e-5" ixy="0" ixz="0"
+          iyy="1e-5" iyz="0"
+          izz="1e-5"/>
+      </inertial>
+    </link>
+
+    <joint name="${prefix}ft_sensor_joint" type="fixed">
+      <parent link="${prefix}ft_sensor_link"/>
+      <child link="${prefix}xarm_gripper_base_link"/>
+      <origin xyz="0 0 ${ft_length}" rpy="0 0 0"/>
+    </joint>
 
     <link name="${prefix}xarm_gripper_base_link">
       <inertial>

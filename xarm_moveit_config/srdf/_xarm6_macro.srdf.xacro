@@ -59,6 +59,7 @@
     <!-- gripper -->
     <xacro:if value="${add_gripper}">
       <group name="${prefix}xarm_gripper">
+        <link name="${prefix}ft_sensor_link" />
         <link name="${prefix}xarm_gripper_base_link" />
         <link name="${prefix}left_outer_knuckle" />
         <link name="${prefix}left_finger" />
@@ -93,6 +94,7 @@
       <disable_collisions link1="${prefix}left_finger" link2="${prefix}right_inner_knuckle" reason="Never" />
       <disable_collisions link1="${prefix}left_finger" link2="${prefix}right_outer_knuckle" reason="Never" />
       <disable_collisions link1="${prefix}left_finger" link2="${prefix}xarm_gripper_base_link" reason="Never" />
+      <disable_collisions link1="${prefix}left_finger" link2="${prefix}ft_sensor_link" reason="Never" />
       <disable_collisions link1="${prefix}left_inner_knuckle" link2="${prefix}left_outer_knuckle" reason="Never" />
       <disable_collisions link1="${prefix}left_inner_knuckle" link2="${prefix}link4" reason="Never" />
       <disable_collisions link1="${prefix}left_inner_knuckle" link2="${prefix}link5" reason="Never" />
@@ -101,12 +103,14 @@
       <disable_collisions link1="${prefix}left_inner_knuckle" link2="${prefix}right_inner_knuckle" reason="Never" />
       <disable_collisions link1="${prefix}left_inner_knuckle" link2="${prefix}right_outer_knuckle" reason="Never" />
       <disable_collisions link1="${prefix}left_inner_knuckle" link2="${prefix}xarm_gripper_base_link" reason="Adjacent" />
+      <disable_collisions link1="${prefix}left_inner_knuckle" link2="${prefix}ft_sensor_link" reason="Adjacent" />
       <disable_collisions link1="${prefix}left_outer_knuckle" link2="${prefix}link5" reason="Never" />
       <disable_collisions link1="${prefix}left_outer_knuckle" link2="${prefix}link6" reason="Never" />
       <disable_collisions link1="${prefix}left_outer_knuckle" link2="${prefix}right_finger" reason="Never" />
       <disable_collisions link1="${prefix}left_outer_knuckle" link2="${prefix}right_inner_knuckle" reason="Never" />
       <disable_collisions link1="${prefix}left_outer_knuckle" link2="${prefix}right_outer_knuckle" reason="Never" />
       <disable_collisions link1="${prefix}left_outer_knuckle" link2="${prefix}xarm_gripper_base_link" reason="Adjacent" />
+      <disable_collisions link1="${prefix}left_outer_knuckle" link2="${prefix}ft_sensor_link" reason="Adjacent" />
 
       <disable_collisions link1="${prefix}link4" link2="${prefix}right_finger" reason="Never" />
       <disable_collisions link1="${prefix}link4" link2="${prefix}right_inner_knuckle" reason="Never" />
@@ -115,16 +119,21 @@
       <disable_collisions link1="${prefix}link5" link2="${prefix}right_inner_knuckle" reason="Never" />
       <disable_collisions link1="${prefix}link5" link2="${prefix}right_outer_knuckle" reason="Never" />
       <disable_collisions link1="${prefix}link5" link2="${prefix}xarm_gripper_base_link" reason="Never" />
+      <disable_collisions link1="${prefix}link5" link2="${prefix}ft_sensor_link" reason="Never" />
       <disable_collisions link1="${prefix}link6" link2="${prefix}right_finger" reason="Never" />
       <disable_collisions link1="${prefix}link6" link2="${prefix}right_inner_knuckle" reason="Never" />
       <disable_collisions link1="${prefix}link6" link2="${prefix}right_outer_knuckle" reason="Never" />
       <disable_collisions link1="${prefix}link6" link2="${prefix}xarm_gripper_base_link" reason="Adjacent" />
+      <disable_collisions link1="${prefix}link6" link2="${prefix}ft_sensor_link" reason="Adjacent" />
       <disable_collisions link1="${prefix}right_finger" link2="${prefix}right_inner_knuckle" reason="Default" />
       <disable_collisions link1="${prefix}right_finger" link2="${prefix}right_outer_knuckle" reason="Adjacent" />
       <disable_collisions link1="${prefix}right_finger" link2="${prefix}xarm_gripper_base_link" reason="Never" />
+      <disable_collisions link1="${prefix}right_finger" link2="${prefix}ft_sensor_link" reason="Never" />
       <disable_collisions link1="${prefix}right_inner_knuckle" link2="${prefix}right_outer_knuckle" reason="Never" />
       <disable_collisions link1="${prefix}right_inner_knuckle" link2="${prefix}xarm_gripper_base_link" reason="Adjacent" />
+      <disable_collisions link1="${prefix}right_inner_knuckle" link2="${prefix}ft_sensor_link" reason="Adjacent" />
       <disable_collisions link1="${prefix}right_outer_knuckle" link2="${prefix}xarm_gripper_base_link" reason="Adjacent" />
+      <disable_collisions link1="${prefix}right_outer_knuckle" link2="${prefix}ft_sensor_link" reason="Adjacent" />
       
       <disable_collisions link1="${prefix}link_eef" link2="${prefix}left_finger" reason="Never" />
       <disable_collisions link1="${prefix}link_eef" link2="${prefix}left_inner_knuckle" reason="Never" />
@@ -133,6 +142,9 @@
       <disable_collisions link1="${prefix}link_eef" link2="${prefix}right_inner_knuckle" reason="Never" />
       <disable_collisions link1="${prefix}link_eef" link2="${prefix}right_outer_knuckle" reason="Never" />
       <disable_collisions link1="${prefix}link_eef" link2="${prefix}xarm_gripper_base_link" reason="Adjacent" />
+      <disable_collisions link1="${prefix}link_eef" link2="${prefix}ft_sensor_link" reason="Adjacent" />
+
+      <disable_collisions link1="${prefix}xarm_gripper_base_link" link2="${prefix}ft_sensor_link" reason="Adjacent" />
     </xacro:if>
     <!-- bio gripper -->
     <xacro:if value="${not add_gripper and add_bio_gripper}">
