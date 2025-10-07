@@ -2,96 +2,39 @@
 
 ## 1. Cartesian Controller Integration
 Files changed:
-- Added the ***controller params*** into `/xarm_controller/config/xarm6_controller.yaml`
-- Remapped the ***ros topics*** in `/xarm_controller/launch/_ros2_control.launch.py` under `ros2_control_node`
+- Added the ***controller params*** into `/xarm_controller/config/xarm_controller.yaml`
 
 ## 2. Enable Services for Force-Torque Sensor
 Files changed:
-- Added user file `xarm_user_params.yaml ` in `/xarm_api/config/` 
+- Added user file `xarm_user_params.yaml `
 
 ## 3. Added Force-Torque Sensor Model in URDF SRDF for Moveit or simulation
 Files changed:
-- Modified URDF in `/xarm_description/urdf/gripper/xarm_gripper.urdf.xacro`
-- Modified SRDF in `/xarm_moveit_config/srdf/_xarm6_macro.srdf.xacro`
+- Modified URDF in `/xarm_description/gripper/xarm.xacro`
 
 #### Visualize sensor reading
 If no FT data or FT sensor overloaded, use service to set enable
 ```
-ros2 service call /xarm/ft_sensor_enable xarm_msgs/srv/SetInt16 data:\ 1\ 
-```
-Check the FT sensor data under no external load. Should be all zero
-```
-ros2 topic echo /xarm/uf_ftsensor_ext_states 
-```
-or use `plotjuggler` to visualize the FT data
-```
-ros2 run plotjuggler plotjuggler
+ros2 service call /xarm/ft_sensor_enable 1
 ```
 
 #### Calibrate FT sensor
 
 Set zero of FT sensor reading with `ft_sensor_set_zero` service:
 ```
-ros2 service call /xarm/ft_sensor_set_zero xarm_msgs/srv/Call 
+ros2 service call /xarm/ft_sensor_set_zero
 ```
-or use `ft_sensor_cali_load` service:
-```
-ros2 service call /xarm/ft_sensor_cali_load xarm_msgs/srv/FtCaliLoad "{
-  datas: [0.965, -0.38, 0.48, 75.39, 2.08, -5.37, 17.58, -0.23, -0.17, -0.08],
-  association_setting_tcp_load: true,
-  m: 0.325,
-  x: -17.0,
-  y: 9.0,
-  z: 11.8
-}"
-```
->`datas` is a list of float consists of 
-[mass, 
-centriod[0], centriod[1], centriod[2], 
-offset[0], offset[1], offset[2], offset[3], offset[4], offset[5]] 
+> or use `ft_sensor_cali_load` service:
 
->This list can be obtained via Xarm's UFactory Studio dashboard using the `Payload Identification`.
 
 ## 4. Added Waypoints planning for MoveIt's computeCartesianPath in xarm_planner
 Files changed:
 - Added `/xarm_msgs/srv/PlanWaypoints.srv`
-- Defined service in `/xarm_msgs/CMakeLists.txt`
-- Created service in `/xarm_planner/src/xarm_planner_node.cpp`
 
 ## 5. Added Gemini2 Camera URDF
 Files changed:
-- Added gemini2 camera stl files in `/xarm_description/meshes/camera/gemini2/`
-- Added gemini2 camera and mount urdf files in `/xarm_description/urdf/camera/`
-- Added `add_gemini2` parameter in the following files:
-    - `/xarm_description/urdf/xarm_device_macro.xacro` (`add_gemini2` will include `gemini2_with_mount.urdf.xacro`->`gemini2.urdf.xacro`)
-    - `/xarm_description/urdf/xarm_device.urdf.xacro`
-    - `/xarm_description/launch/_robot_description.launch.py`
-    - `/xarm_controller/launch/_ros2_control.launch.py`
-    - `/xarm_ros2/uf_ros_lib//uf_ros_lib/moveit_configs_builders.py`
-    - `/xarm_moveit_config/launch/_robot_moveit_fake.launch.py`
-    - `/xarm_moveit_config/launch/_robot_moveit_realmove.launch.py`
+- Added gemini2 camera stl files in `/xarm_description/camera/gemini2/`
 
-#### **Notes of xarm launch structure for add camera to URDF**
-
-Launching `_robot_moveit_realmove.launch.py` and `_robot_moveit_fake.launch.py` in '/xarm_moveit_config/launch' will call the folllowing:
-- `MoveItConfigsBuilder` (`/xarm_ros2/uf_ros_lib//uf_ros_lib/moveit_configs_builders.py`)
-- `/xarm_description/launch/_robot_description.launch.py` -> `/xarm_description/urdf/xarm_device.urdf.xacro`
-- `/xarm_moveit_config/launch/_robot_moveit_common2.launch.py`
-- `/xarm_controller/launch/_ros2_control.launch.py` -> `/xarm_description/urdf/xarm_device.urdf.xacro`
-
-**xarm_device.urdf.xacro** will call `/xarm_description/urdf/xarm_device_macro.xacro`: the following two parameteres will call
-- `add_realsense_d435i` -> `xarm_description/urdf/camera/realsense_d435i.urdf.xacro`
-- `add_d435i_links` -> `xarm_description/urdf/camera/realsense.gazebo.xacro`
-
-
-## 6. TODO: Add trajectory retime after using computeCartesianPath() of MoveIT
-### Current Issue:
-move_group_->getCurrentState() still cannot get current state, moveit seems has issue of getting joint states from the topic /joint_states
-#### Files to work with
-- `/xarm_ros2/xarm_planner/src/xarm_planner.cpp`
-- `/xarm_ros2/xarm_planner/include/xarm_planner/xarm_planner.h`
-
-> If this is not fixed. Setting target waypoints will result in very fast motion as trajectory retime is not processed to adjust speed.
 
 ## Below are the readme of original package
 
