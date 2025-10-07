@@ -137,6 +137,17 @@ def launch_setup(context, *args, **kwargs):
             robot_params,
         ],
         output='screen',
+        remappings=[
+            ("motion_control_handle/target_frame", "target_frame"),
+            ("cartesian_motion_controller/target_frame", "target_frame"),
+            ("cartesian_compliance_controller/target_frame", "target_frame"),
+            ("cartesian_force_controller/target_wrench", "target_wrench"),
+            ("cartesian_compliance_controller/target_wrench", "target_wrench"),
+            ("cartesian_force_controller/ft_sensor_wrench", "xarm/uf_ftsensor_ext_states"),
+            ("cartesian_compliance_controller/ft_sensor_wrench", "xarm/uf_ftsensor_ext_states"),
+            # ("cartesian_force_controller/ft_sensor_wrench", "constrained_force"),
+            # ("cartesian_compliance_controller/ft_sensor_wrench", "constrained_force"),
+        ],
     )
 
     return [
