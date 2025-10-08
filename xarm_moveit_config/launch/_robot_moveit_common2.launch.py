@@ -46,8 +46,8 @@ def launch_setup(context, *args, **kwargs):
     )
 
     # rviz with moveit configuration
-    #rviz_config_file = PathJoinSubstitution([FindPackageShare(moveit_config_package_name), 'rviz', 'planner_compliance.rviz' if no_gui_ctrl.perform(context) == 'true' else 'moveit.rviz'])
-    rviz_config_file = PathJoinSubstitution([FindPackageShare(moveit_config_package_name), 'rviz', 'planner.rviz' if no_gui_ctrl.perform(context) == 'true' else 'cartesian_controller.rviz'])
+    #rviz_config_file = PathJoinSubstitution([FindPackageShare(moveit_config_package_name), 'rviz', 'planner.rviz' if no_gui_ctrl.perform(context) == 'true' else 'moveit.rviz'])
+    rviz_config_file = PathJoinSubstitution([FindPackageShare(moveit_config_package_name), 'rviz', 'door_manip.rviz'])
     rviz2_node = Node(
         package='rviz2',
         executable='rviz2',
