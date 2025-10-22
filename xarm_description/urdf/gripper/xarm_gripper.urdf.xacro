@@ -110,12 +110,12 @@
           iyy="1.7225E-05" iyz="4.6433E-06" izz="5.1466E-06" />
       </inertial>
       <xacro:common_link_visual 
-        mesh_filename="gripper/xarm/left_finger"  
+        mesh_filename="gripper/xarm/left_finger_hook"  
         origin_xyz="0 0 0" 
         origin_rpy="0 0 0"
         material_name="${prefix}Silver" />
       <xacro:common_link_collision 
-        mesh_filename="gripper/xarm/left_finger"  
+        mesh_filename="gripper/xarm/left_finger_hook"  
         origin_xyz="0 0 0" 
         origin_rpy="0 0 0" />
     </link>
@@ -188,12 +188,12 @@
           iyy="1.7225E-05" iyz="-4.6435E-06" izz="5.1466E-06" />
       </inertial>
       <xacro:common_link_visual 
-        mesh_filename="gripper/xarm/right_finger"  
+        mesh_filename="gripper/xarm/right_finger_hook"  
         origin_xyz="0 0 0" 
         origin_rpy="0 0 0"
         material_name="${prefix}Silver" />
       <xacro:common_link_collision 
-        mesh_filename="gripper/xarm/right_finger"  
+        mesh_filename="gripper/xarm/right_finger_hook"  
         origin_xyz="0 0 0" 
         origin_rpy="0 0 0" />
     </link>
