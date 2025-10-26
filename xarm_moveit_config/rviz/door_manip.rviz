@@ -567,7 +567,7 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        base_footprint:
+        base_link:
           Value: true
         camera_botter_screw_frame:
           Value: false
@@ -588,8 +588,6 @@ Visualization Manager:
         camera_link:
           Value: false
         door_lever:
-          Value: true
-        door_lever_KF:
           Value: true
         door_lever_head:
           Value: true
@@ -639,8 +637,6 @@ Visualization Manager:
       Tree:
         world:
           link_base:
-            door_lever_KF:
-              {}
             link1:
               link2:
                 link3:
@@ -835,6 +831,19 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /docking_path
       Value: true
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: door_plane
+      Namespaces:
+        {}
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /door_plane_marker
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -881,25 +890,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 4.234485626220703
+      Distance: 4.75238037109375
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.6256919503211975
-        Y: -0.20184765756130219
-        Z: -0.115350641310215
+        X: 0.867280900478363
+        Y: -0.12584500014781952
+        Z: -0.09613219648599625
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.7847967743873596
+      Pitch: 0.5747970342636108
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.427220344543457
+      Yaw: 2.377220630645752
     Saved: ~
 Window Geometry:
   Displays:
