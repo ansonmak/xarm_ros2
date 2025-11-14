@@ -93,6 +93,14 @@ move_group_->getCurrentState() still cannot get current state, moveit seems has 
 
 > If this is not fixed. Setting target waypoints will result in very fast motion as trajectory retime is not processed to adjust speed.
 
+## 7. Added customized fingertip on gripper
+Files changed:
+- Added: mesh files: 
+    - `/xarm_description/meshes/gripper/xarm/left_finger_hook.stl` 
+    - `/xarm_description/meshes/gripper/xarm/right_finger_hook.stl`
+- Changed:
+    - `/xarm_description/urdf/gripper/xarm_gripper.urdf.xacro`
+
 ## Below are the readme of original package
 
 # xarm_ros2
