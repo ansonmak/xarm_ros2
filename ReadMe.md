@@ -1,3 +1,9 @@
+# Controlling xArm via WebGUI
+
+<img src="xarm_webGUI.png" alt="xarm_webGUI" width="600">
+
+Follow page 74 in [xarm user manual](xArm-User-Manual-V2.0.0.pdf) for connection xarm's IP and control with web GUI.
+
 # Package Revision Notes
 
 ## 1. Cartesian Controller Integration
